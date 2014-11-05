@@ -1,3 +1,5 @@
 vendor
 bower_components
 composer.lock
+images/*.jpg
+images/*.png
