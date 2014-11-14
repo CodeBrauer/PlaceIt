@@ -5,13 +5,10 @@
  */
 
 require 'config.php';
-require 'functions.php';
+require 'Helper.class.php';
 require 'vendor/autoload.php';
 
 $app = new \Slim\Slim(array(
-    'log.enable' => true,
-    'log.path'   => './logs',
-    'log.level'  => 4,
     'debug'      => $config['debug'],
     'mode'       => 'development',
     'view'       => new \Slim\Views\Twig(),
