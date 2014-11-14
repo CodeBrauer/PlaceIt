@@ -24,37 +24,34 @@ $app->get('/', function() use ($app, $config) {
 });
 
 $app->get('/:size', function ($size) use ($app, $config) {
-    $color = array(mt_rand(0,255),mt_rand(0,255),mt_rand(0,255));
+    // generate a random color (not pure white/black...)
+    $color = array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
 
-
+    // check for file extenstion, if not given, pick png
     if (preg_match('/\./', $size)) {
-        $filename = $size;
         list($size, $ext) = explode('.', $size);
         $ext = $ext === 'jpg' ? 'jpeg' : $ext; 
     } else {
         $ext = 'png';
-        $filename = "$size.$ext";
     }
-    
-    $img = imagecreate($size, $size);
-    
-    if ($color[0] < 166 && $color[1] < 166 && $color[2] < 166) {
-        $text_color = imagecolorallocate($img, 255, 255, 255);
-    } else {
-        $text_color = imagecolorallocate($img, 0, 0, 0);
-    }
+
+    $img        = imagecreatetruecolor($size, $size);
+    $text_color = imagecolorallocate($img, 255, 255, 255);
 
     imagefill($img, 0, 0, imagecolorallocate($img, $color[0], $color[1], $color[2]));
-    $app->response->headers->set('Content-Type', 'image/'.$ext);
 
-    imagestring($img, 4, 25, 25, $filename, $text_color);
+    // add the text to the pictures
+    imagettftext($img, $config['font_size'], 0, 20, 30, $text_color, $config['default_font'], $size.'x'.$size);
     $text = 'rgb('.implode(', ', $color).')';
-    imagestring($img, 4, 25, 45, $text, $text_color);
-    imagestring($img, 4, 25, 65, rgb2hex($color), $text_color);
+    imagettftext($img, $config['font_size'], 0, 20, 55, $text_color, $config['default_font'], Helper::rgb2hex($color));
+    imagettftext($img, $config['font_size'], 0, 20, 80, $text_color, $config['default_font'], $text);
 
+
+    $app->response->headers->set('Content-Type', 'image/'.$ext);
     call_user_func('image'.$ext, $img); // imagepng/imagejpg/imagegif etc..
 
-})->conditions(array('size' => '(\d+)|(\d+\.+('.implode('|', $config['valid_image_types']).'))'));
+// conditions-regex => (http://www.regexr.com/39tjk)
+})->conditions(array('size' => '((\d+x+\d|\d)+\.('.implode('|', $config['valid_image_types']).'))|(\d+x+\d+)|(\d+)'));
 
 $app->run();
 ?>

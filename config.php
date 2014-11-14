@@ -25,3 +25,7 @@ $config['valid_image_types'] = array('jpg', 'jpeg', 'png', 'gif');
 
 // default image type, if type is not given
 $config['default_image_type'] = $config['valid_image_types'][2];
+
+// font for generated placeholders
+$config['default_font'] = 'lib/fonts/UbuntuMono-B.ttf';
+$config['font_size']    = 13;
