@@ -1,0 +1,10 @@
+</div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        $('.refresh-btn').bind('click', function() {
+            $('.preview-thumb').attr('src', '250.png?tmp=' + (new Date).getTime());
+        });
+    </script>
+</body>
+</html>

@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>PlaceIt</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-</head>
-<body>
-    <div class="container">
-        <div class="page-header">
-            <h1>{{ config.app_name }} <small>{{ config.app_slogan }}</small></h1>
-        </div>
+{% include "parts/head.html" %}
         <br>
         <div class="row">
             <div class="col-md-9">
@@ -47,13 +35,4 @@
                 </p>
             </div>
         </div>
-    </div>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script>
-        $('.refresh-btn').bind('click', function() {
-            $('.preview-thumb').attr('src', '250.png?tmp=' + (new Date).getTime());
-        });
-    </script>
-</body>
-</html>
+{% include "parts/footer.html" %}

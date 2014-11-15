@@ -20,7 +20,7 @@ $view->parserOptions = array(
 );
 
 $app->get('/', function() use ($app, $config) {
-    $app->render('index.php', array('config' => $config));
+    $app->render('index.twig.php', array('config' => $config));
 });
 
 $app->get('/:size', function ($size) use ($app, $config) {
