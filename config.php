@@ -17,8 +17,13 @@ $config['maintaince_message'] = 'At the moment this service is not availble';
 $config['use_random_color'] = false;
 
 // Default colors for placeholders (color as rgb) - only if 'use_random_color' is true
-$config['placeholder_colors']['background'] = array('r' => 22, 'g' => 22, 'b' => 22);
-$config['placeholder_colors']['text']       = array('r' => 38, 'g' => 248, 'b' => 0);
+$config['placeholder_colors']['background'] = array(22, 22, 22);
+$config['placeholder_colors']['text']       = array(38, 248, 0);
+
+// enable/disable placeholder text
+$config['placeholder_text']['line_1'] = true;
+$config['placeholder_text']['line_2'] = true;
+$config['placeholder_text']['line_3'] = true;
 
 // image types that can be generated - these are supported,
 // you can disabled one of them or add maybe some new.

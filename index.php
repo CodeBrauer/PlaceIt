@@ -24,8 +24,15 @@ $app->get('/', function() use ($app, $config) {
 });
 
 $app->get('/:size', function ($size) use ($app, $config) {
-    // generate a random color (not pure white/black...)
-    $color = array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
+    if ($config['use_random_color']) {
+        // generate a random color (not pure white/black...)
+        $color             = array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
+        $text_color_values = array(255, 255, 255);
+    } else {
+        // load color from config
+        $color             = $config['placeholder_colors']['background'];
+        $text_color_values = $config['placeholder_colors']['text'];
+    }
 
     // check for file extenstion, if not given, pick png
     if (preg_match('/\./', $size)) {
@@ -36,21 +43,31 @@ $app->get('/:size', function ($size) use ($app, $config) {
     }
 
     $img        = imagecreatetruecolor($size, $size);
-    $text_color = imagecolorallocate($img, 255, 255, 255);
-
+    $text_color = imagecolorallocate($img, $text_color_values[0], $text_color_values[1], $text_color_values[2]);
     imagefill($img, 0, 0, imagecolorallocate($img, $color[0], $color[1], $color[2]));
 
     // add the text to the pictures
-    imagettftext($img, $config['font_size'], 0, 20, 30, $text_color, $config['default_font'], $size.'x'.$size);
-    $text = 'rgb('.implode(', ', $color).')';
-    imagettftext($img, $config['font_size'], 0, 20, 55, $text_color, $config['default_font'], Helper::rgb2hex($color));
-    imagettftext($img, $config['font_size'], 0, 20, 80, $text_color, $config['default_font'], $text);
+    if ($config['placeholder_text']['line_1'] !== false) {
+        $text = $size.'x'.$size;
+        imagettftext($img, $config['font_size'], 0, 20, 30, $text_color, $config['default_font'], $text);
+    }
+    if ($config['placeholder_text']['line_2'] !== false) {
+        $text = Helper::rgb2hex($color);
+        imagettftext($img, $config['font_size'], 0, 20, 55, $text_color, $config['default_font'], $text);
+    }
+    if ($config['placeholder_text']['line_3'] !== false) {
+        $text = 'rgb('.implode(', ', $color).')';
+        imagettftext($img, $config['font_size'], 0, 20, 80, $text_color, $config['default_font'], $text);
+    }
+    
+    if (function_exists('image'.$ext)) {
+        $app->response->headers->set('Content-Type', 'image/'.$ext);
+        call_user_func('image'.$ext, $img); // imagepng/imagejpg/imagegif etc..
+    } else {
+        $app->halt(500, 'Image could not be created (No output function found for: "'.$ext.'")');
+    }
 
-
-    $app->response->headers->set('Content-Type', 'image/'.$ext);
-    call_user_func('image'.$ext, $img); // imagepng/imagejpg/imagegif etc..
-
-// conditions-regex => (http://www.regexr.com/39tjk)
+    // conditions-regex => (http://www.regexr.com/39tjk)
 })->conditions(array('size' => '((\d+x+\d|\d)+\.('.implode('|', $config['valid_image_types']).'))|(\d+x+\d+)|(\d+)'));
 
 $app->run();
