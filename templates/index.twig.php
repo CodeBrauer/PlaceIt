@@ -2,8 +2,8 @@
         <br>
         <div class="row">
             <div class="col-md-9">
-                <h3>Possible calls for colorful placeholders:</h3>
-                <table class="table">
+                <h3>Basics:</h3>
+                <table class="table table-striped">
                     <thead>
                         <tr><th>Route</th><th>Respone</th></tr>
                     </thead>
@@ -26,6 +26,24 @@
                         </tr>
                     </tbody>
                 </table>
+                <h3>Add custom text</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Route Example</th><th>Respone</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>/500x300/Hello World</code></td>
+                            <td>Adds text <code>Hello World</code> to the first line</td>
+                        </tr>
+                        <tr>
+                            <td><code>/500x300.{{ config.valid_image_types.0 }}?text=Lorem Ipsum</code></td>
+                            <td>Adds text <code>Lorem Ipsum</code> to the first line</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Color it!</h3>
+                <em>Not possible yet.</em>
             </div>
             <div class="col-md-3">
                 <p class="text-center">

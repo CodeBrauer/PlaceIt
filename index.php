@@ -23,7 +23,7 @@ $app->get('/', function() use ($app, $config) {
     $app->render('index.twig.php', array('config' => $config));
 });
 
-$app->get('/:size', function ($size) use ($app, $config) {
+$app->get('/:size(/:text)', function ($size, $custom_text = false) use ($app, $config) {
     if ($config['use_random_color']) {
         // generate a random color (not pure white/black...)
         $color             = array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
@@ -32,6 +32,10 @@ $app->get('/:size', function ($size) use ($app, $config) {
         // load color from config
         $color             = $config['placeholder_colors']['background'];
         $text_color_values = $config['placeholder_colors']['text'];
+    }
+
+    if ($custom_text === false && isset($_GET['text'])) {
+        $custom_text = $_GET['text'];
     }
 
     // check for file extenstion, if not given, pick png
@@ -48,7 +52,7 @@ $app->get('/:size', function ($size) use ($app, $config) {
 
     // add the text to the pictures
     if ($config['placeholder_text']['line_1'] !== false) {
-        $text = $size.'x'.$size;
+        $text = ($custom_text === false) ?  $size.'x'.$size : $custom_text;
         imagettftext($img, $config['font_size'], 0, 20, 30, $text_color, $config['default_font'], $text);
     }
     if ($config['placeholder_text']['line_2'] !== false) {
