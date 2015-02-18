@@ -36,6 +36,10 @@ $config['default_image_type'] = $config['valid_image_types'][2];
 $config['default_font'] = 'lib/fonts/UbuntuMono-B.ttf';
 $config['font_size']    = 13;
 
+// max size that can be generated
+$config['max_image_x'] = 2500;
+$config['max_image_y'] = 2500;
+
 /* ============ (4) Placeholder generation (with photos) ============ */
 
 // Filepath for Images
