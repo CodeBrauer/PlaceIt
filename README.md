@@ -1,6 +1,6 @@
 # PlaceIt - a simple placeholding service app
 
-the very first commercial project by CodeBrauer (Gabriel Wanzek)
+*readme is coming soon*
 
 # Powered by:
 
