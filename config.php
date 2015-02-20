@@ -14,7 +14,7 @@ $config['maintaince']         = false;
 $config['maintaince_message'] = 'At the moment this service is not availble';
 
 /* ============ (3) Placeholder generation (no photos) ============ */
-$config['use_random_color'] = false;
+$config['use_random_color'] = true;
 
 // Default colors for placeholders (color as rgb) - only if 'use_random_color' is true
 $config['placeholder_colors']['background'] = array(22, 22, 22);
@@ -27,7 +27,7 @@ $config['placeholder_text']['line_3'] = true;
 
 // image types that can be generated - these are supported,
 // you can disabled one of them or add maybe some new.
-$config['valid_image_types'] = array('jpg', 'jpeg', 'png', 'gif');
+$config['valid_image_types'] = array('jpg', 'jpeg', 'png', 'gif',);
 
 // default image type, if type is not given
 $config['default_image_type'] = $config['valid_image_types'][2];
