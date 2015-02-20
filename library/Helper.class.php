@@ -29,12 +29,12 @@ class Helper
      */
     public static function hex2rgb($color)
     {
-        list($r, $g, $b) = array( $color[0].$color[1], $color[2].$color[3], $color[4].$color[5] );
+        list($r, $g, $b) = [ $color[0].$color[1], $color[2].$color[3], $color[4].$color[5] ];
         $r = hexdec($r);
         $g = hexdec($g);
         $b = hexdec($b);
 
-        return array($r, $g, $b);
+        return [ $r, $g, $b ];
     }
 
     /**
@@ -68,7 +68,7 @@ class Helper
      */
     public static function getRandomRGBColor()
     {
-        return array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
+        return array_fill(0, 3, mt_rand(25, 215));
     }
 
     /**

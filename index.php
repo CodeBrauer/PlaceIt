@@ -8,19 +8,17 @@ require 'config/config.php';
 require 'library/Helper.class.php';
 require 'vendor/autoload.php';
 
-$app = new \Slim\Slim(array(
+$app = new \Slim\Slim([
     'debug' => $config['debug'],
     'mode'  => 'development',
     'view'  => new \Slim\Views\Twig(),
-));
+]);
 
 $view = $app->view();
-$view->parserOptions = array(
-    'debug' => $config['debug'],
-);
+$view->parserOptions = [ 'debug' => $config['debug'] ];
 
 $app->get('/', function() use ($app, $config) {
-    $app->render('index.twig.php', array('config' => $config));
+    $app->render('index.twig.php', [ 'config' => $config ]);
 });
 
 $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_text = false) use ($app, $config) {
@@ -31,7 +29,7 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
         } else {
             $color = Helper::convert2rgb($color);
         }
-        $text_color_values = array(255, 255, 255);
+        $text_color_values = array_fill(0, 3, 255);
     } else {
         // load color from config
         $color             = $config['placeholder_colors']['background'];
@@ -98,10 +96,10 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
      * color-regex => http://regexr.com/3a604
      */
 })->conditions(
-    array(
+    [
         'size'  => '((\d+x+\d|\d)+\.('.implode('|', $config['valid_image_types']).'))|(\d+x+\d+)|(\d+)',
         'color' => '(\d{1,3},\d{1,3},\d{1,3})|([0-9a-f]{6})|([0-9a-f]{3})',
-    )
+    ]
 );
 
 $app->run();

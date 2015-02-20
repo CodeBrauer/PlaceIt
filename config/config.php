@@ -2,7 +2,7 @@
 /**
  * Config File for PlaceIt
  */
-$config = array();
+$config = [];
 
 /* ============ (1) Branding options ============ */
 $config['app_name']   = 'PlaceIt';
@@ -17,8 +17,8 @@ $config['maintaince_message'] = 'At the moment this service is not availble';
 $config['use_random_color'] = true;
 
 // Default colors for placeholders (color as rgb) - only if 'use_random_color' is true
-$config['placeholder_colors']['background'] = array(22, 22, 22);
-$config['placeholder_colors']['text']       = array(38, 248, 0);
+$config['placeholder_colors']['background'] = [ 22, 22, 22 ];
+$config['placeholder_colors']['text']       = [ 38, 248, 0 ];
 
 // enable/disable placeholder text
 $config['placeholder_text']['line_1'] = true;
@@ -27,7 +27,7 @@ $config['placeholder_text']['line_3'] = true;
 
 // image types that can be generated - these are supported,
 // you can disabled one of them or add maybe some new.
-$config['valid_image_types'] = array('jpg', 'jpeg', 'png', 'gif',);
+$config['valid_image_types'] = [ 'jpg', 'jpeg', 'png', 'gif', ];
 
 // default image type, if type is not given
 $config['default_image_type'] = $config['valid_image_types'][2];
