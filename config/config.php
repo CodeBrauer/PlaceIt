@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Config File for PlaceIt
  */
@@ -33,7 +33,7 @@ $config['valid_image_types'] = array('jpg', 'jpeg', 'png', 'gif',);
 $config['default_image_type'] = $config['valid_image_types'][2];
 
 // font for generated placeholders and font size (size is in pt)
-$config['default_font'] = 'lib/fonts/UbuntuMono-B.ttf';
+$config['default_font'] = 'library/fonts/UbuntuMono-B.ttf';
 $config['font_size']    = 13;
 
 // max size that can be generated

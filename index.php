@@ -4,8 +4,8 @@
  * @author  CodeBrauer <hello@gabrielw.de>
  */
 
-require 'config.php';
-require 'Helper.class.php';
+require 'config/config.php';
+require 'library/Helper.class.php';
 require 'vendor/autoload.php';
 
 $app = new \Slim\Slim(array(
@@ -27,7 +27,7 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
     if ($config['use_random_color']) {
         // generate a random color (not pure white/black...)
         if ($color === false) {
-            $color = array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
+            $color = Helper::getRandomRGBColor();
         } else {
             $color = Helper::convert2rgb($color);
         }
@@ -45,7 +45,7 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
     // check for file extenstion, if not given, pick png
     if (preg_match('/\./', $size)) {
         list($size, $ext) = explode('.', $size);
-        $ext = $ext === 'jpg' ? 'jpeg' : $ext; 
+        $ext = $ext === 'jpg' ? 'jpeg' : $ext;
     } else {
         $ext = 'png';
     }
@@ -82,7 +82,7 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
         $text = 'rgb('.implode(', ', $color).')';
         imagettftext($img, $config['font_size'], 0, 20, 80, $text_color, $config['default_font'], $text);
     }
-    
+
     if (function_exists('image'.$ext)) {
         $app->response->headers->set('Content-Type', 'image/'.$ext);
         call_user_func('image'.$ext, $img); // imagepng/imagejpg/imagegif etc..

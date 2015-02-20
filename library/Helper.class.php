@@ -61,6 +61,16 @@ class Helper
         }
         return false;
     }
+
+    /**
+     * returns a random color thats not pure white/black in RGB
+     * @return array RGB
+     */
+    public static function getRandomRGBColor()
+    {
+        return array(mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215));
+    }
+
     /**
      * checks a image can be generated with the current memory limit
      * @param  int  $x   width of the image
@@ -78,13 +88,13 @@ class Helper
     {
         $rgb = 3;
         $max_mem = ini_get('memory_limit');
-        for ($i=0; $i < PHP_INT_MAX; $i += 500) { 
+        for ($i=0; $i < PHP_INT_MAX; $i += 500) {
             $test = ($i * $i * $rgb * 1.8) < self::calcBytes($max_mem);
             if ($test === false) {
                 echo "$i\n";
                 break;
             }
-            
+
         }
     }
 
