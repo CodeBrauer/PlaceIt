@@ -1,5 +1,5 @@
 {
-  "name": "PlaceIT",
+  "name": "PlaceIt",
   "version": "0.0.1",
   "authors": [
     "CodeBrauer <gabrielwanzek@ymail.com>"
@@ -17,7 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
     "bootstrap": "~3.3.0",
     "font-awesome": "~4.2.0"
   }
