@@ -24,11 +24,7 @@ $app->get('/', function() use ($app, $config) {
 $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_text = false) use ($app, $config) {
     if ($config['use_random_color']) {
         // generate a random color (not pure white/black...)
-        if ($color === false) {
-            $color = Helper::getRandomRGBColor();
-        } else {
-            $color = Helper::convert2rgb($color);
-        }
+        $color             = $color ? Helper::getRandomRGBColor() : Helper::convert2rgb($color);
         $text_color_values = array_fill(0, 3, 255);
     } else {
         // load color from config
@@ -36,9 +32,7 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
         $text_color_values = $config['placeholder_colors']['text'];
     }
 
-    if ($custom_text === false && isset($_GET['text'])) {
-        $custom_text = $_GET['text'];
-    }
+    $custom_text = ($custom_text === false && isset($_GET['text'])) ? $_GET['text'] : $custom_text;
 
     // check for file extenstion, if not given, pick png
     if (preg_match('/\./', $size)) {
