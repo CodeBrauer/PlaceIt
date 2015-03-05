@@ -24,7 +24,7 @@ $app->get('/', function() use ($app, $config) {
 $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_text = false) use ($app, $config) {
     if ($config['use_random_color']) {
         // generate a random color (not pure white/black...)
-        $color             = $color ? Helper::getRandomRGBColor() : Helper::convert2rgb($color);
+        $color             = $color ? Helper::convert2rgb($color) : Helper::getRandomRGBColor();
         $text_color_values = array_fill(0, 3, 255);
     } else {
         // load color from config
