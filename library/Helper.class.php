@@ -84,14 +84,19 @@ class Helper
         return ($x * $y * $rgb * 1.8) < (self::calcBytes($max_mem) - memory_get_usage());
     }
 
+    /**
+     * check max image size that can be generated (locked by php_value memory_limit)
+     * @todo doesn't work so well now..
+     * @return int max image size in px
+     */
     public static function getMaxImageSize()
     {
         $rgb = 3;
         $max_mem = ini_get('memory_limit');
-        for ($i=0; $i < PHP_INT_MAX; $i += 500) {
+        for ($i=0; $i < PHP_INT_MAX; $i += 300) {
             $test = ($i * $i * $rgb * 1.8) < self::calcBytes($max_mem);
             if ($test === false) {
-                echo "$i\n";
+                return $i;
                 break;
             }
 
@@ -99,10 +104,60 @@ class Helper
     }
 
     /**
+     * get all photos from the img_path with allowed filetypes [description]
+     * @return array numeric, relative path to images
+     */
+    public static function getRawImages()
+    {
+        global $config;
+
+        $dir        = $config['img_path'];
+        $file_types = implode('|', $config['valid_photo_filetypes']);
+
+        if ( file_exists($dir) === false) {
+            return false;
+        }
+
+        $files  = glob($dir . '*');
+
+        $images = preg_grep('/(' . $file_types . ')/i', $files);
+
+        return array_values($images);
+    }
+
+    /**
+     * not documented yet, function doen't work fine at all
+     * @todo doc it!
+     * @param  [type]  $x             [description]
+     * @param  [type]  $y             [description]
+     * @param  [type]  $longestLength [description]
+     * @param  boolean $allowDistort  [description]
+     * @return [type]                 [description]
+     */
+    public static function getImageScale($x, $y, $longestLength, $allowDistort = false) {
+        //Set the default NEW values to be the old, in case it doesn't even need scaling
+        list($nx, $ny) = array($x, $y);
+            if ($x > $y) {
+                if ($longestLength > $x && !$allowDistort) {
+                    return array($x, $y);
+                }
+                $r = $x / $longestLength;
+                return array($longestLength, $y / $r);
+            } else {
+                if ($longestLength > $x && !$allowDistort) {
+                    return array($x, $y);
+                }
+                $r = $y / $longestLength;
+                return array($x / $r, $longestLength);
+            }
+        return array($nx, $ny);
+    }
+
+    /**
      * calculates the php.ini-values to bytes
      * @link http://php.net/ini_get
      * @param  string $value a value from php.ini (like 8M or 1G)
-     * @return string bytes
+     * @return int bytes
      */
     private static function calcBytes($value) {
         $value     = trim($value);
@@ -112,7 +167,7 @@ class Helper
             case 'm': $value *= 1024;
             case 'k': $value *= 1024;
         }
-        return $value;
+        return (int)$value;
     }
 
 }
