@@ -68,7 +68,7 @@ class Helper
      */
     public static function getRandomRGBColor()
     {
-        return array_fill(0, 3, mt_rand(25, 215));
+        return [mt_rand(25, 215), mt_rand(25, 215), mt_rand(25, 215)];
     }
 
     /**
