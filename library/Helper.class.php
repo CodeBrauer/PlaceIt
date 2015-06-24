@@ -29,12 +29,12 @@ class Helper
      */
     public static function hex2rgb($color)
     {
-        list($r, $g, $b) = [ $color[0].$color[1], $color[2].$color[3], $color[4].$color[5] ];
-        $r = hexdec($r);
-        $g = hexdec($g);
-        $b = hexdec($b);
+        list($red, $green, $blue) = [ $color[0].$color[1], $color[2].$color[3], $color[4].$color[5] ];
+        $red   = hexdec($red);
+        $green = hexdec($green);
+        $blue  = hexdec($blue);
 
-        return [ $r, $g, $b ];
+        return [ $red, $green, $blue ];
     }
 
     /**
