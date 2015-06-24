@@ -1,5 +1,6 @@
 # PlaceIt - a simple placeholding service app
 
+[![Code Climate](https://codeclimate.com/github/CodeBrauer/PlaceIt/badges/gpa.svg)](https://codeclimate.com/github/CodeBrauer/PlaceIt)
 *readme is coming soon*
 
 # Powered by:
