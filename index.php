@@ -97,4 +97,3 @@ $app->get('/:size(/:color(/:text))', function ($size, $color = false, $custom_te
 );
 
 $app->run();
-?>
