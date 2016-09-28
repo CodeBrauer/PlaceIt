@@ -42,5 +42,9 @@ $config['max_image_y'] = 2500;
 
 /* ============ (4) Placeholder generation (with photos) ============ */
 
-// Filepath for Images
-$config['img_path']   = 'images';
+// Filepath for Images - needs '/' at the end!
+$config['img_path']   = 'images/';
+
+// filetypes that should be scanned from the img_path (default: see 'valid_image_types')
+// this option is not case sensitive!
+$config['valid_photo_filetypes'] = [ 'jpg', 'jpeg', 'png', 'gif', ];

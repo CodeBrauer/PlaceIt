@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        @media screen and (max-width: 700px) {
+            .image, .left {
+                display: none;
+            }
+            .message {
+                display: block !important;
+                height: 100vh;
+                width: 100vw;
+                margin-top: 12.5%;
+                text-align: center;
+                font-size: 36px;
+                font-weight: 900;
+            }
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: 'Fira Sans', sans-serif;
+        }
+
+        .message {
+            display: none;
+        }
+
+        .left {
+            width: 230px;
+            border-right: 1px solid #fff;
+            height: 100vh;
+            float: left;
+            padding: 10px 0 0 10px;
+            background: #222;
+            color: #fafafa;
+            box-shadow: 0 0 11px rgba(10,10,10,0.5);
+            z-index: 1;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            padding-bottom: 3px;
+            margin-top: 13px;
+            text-transform: uppercase;
+            font-size: 13px;
+            font-family: 'Fira Sans';
+            font-weight: 900;
+        }
+
+        .image {
+            position: absolute;
+            height: 100vh;
+            text-align: center;
+            width: 100vw;
+            padding-top: 30px;
+            z-index: -9001;
+        }
+        input {
+            width: 90%;
+            height: 20px;
+        }
+        input[type="color"] {
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">Use desktop, fagg3t m9<br>cuz 3deep5me!</div>
+    <div class="left">
+        <div class="ranger">
+            <label for="width">Width</label><input type="range" id="width" min="10" max="1500" step="1" value="200">
+        </div>
+        <div class="ranger">
+            <label for="height">Height</label><input type="range" id="height" min="10" max="1500" step="1" value="200">
+        </div>
+        <div class="ranger">
+            <label for="color">Color</label>
+            <input type="color" id="color" value="#ffcc00">
+        </div>
+    </div>
+    <div class="image">
+        <img src="200x200/ffcc00">
+    </div>
+    <script>
+        Array.prototype.list = function() {
+            var limit = this.length,
+            orphans = arguments.length - limit,
+            scope = orphans > 0 && typeof(arguments[arguments.length-1]) != "string" ? arguments[arguments.length-1] : window;
+
+            while(limit--) scope[arguments[limit]] = this[limit];
+
+            if (scope != window) orphans--;
+
+            if (orphans > 0) {
+                orphans += this.length;
+                while(orphans-- > this.length) scope[arguments[orphans]] = null;
+            }
+        }
+
+        document.querySelector('#width').addEventListener('input', changeImg);
+        document.querySelector('#height').addEventListener('input', changeImg);
+        document.querySelector('#color').addEventListener('change', changeImg);
+        function getImageSrc() {
+            var img = document.querySelector('img').getAttribute('src');
+            img.split('/').list('size', 'color');
+            size.split('x').list('width', 'height');
+            return [width, height, color];
+        }
+        function setImageSrc(w,h,c) {
+            var current = getImageSrc();
+            if (w != false) { current[0] = w; }
+            if (h != false) { current[1] = h; }
+            if (c != false) { current[2] = c; }
+            var src = current[0] + "x" + current[1] + "/" + current[2].replace('#', '');
+            var img = document.querySelector('img').setAttribute('src', src);
+        }
+        function changeImg() {
+            if (this.id == "width") {
+                setImageSrc(this.value, false, false);
+            }
+            if (this.id == "height") {
+                setImageSrc(false, this.value, false);
+            }
+            if (this.id == "color") {
+                // console.log(this.value);
+                setImageSrc(false, false, this.value);
+            }
+        }
+    </script>
+</body>
+</html>
